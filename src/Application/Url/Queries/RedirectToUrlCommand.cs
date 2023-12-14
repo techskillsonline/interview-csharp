@@ -2,6 +2,7 @@
 using HashidsNet;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using UrlShortenerService.Application.Common.Exceptions;
 using UrlShortenerService.Application.Common.Interfaces;
 
 namespace UrlShortenerService.Application.Url.Queries;
@@ -34,6 +35,10 @@ public class RedirectToUrlCommandHandler : IRequestHandler<RedirectToUrlCommand,
 
     public async Task<string> Handle(RedirectToUrlCommand request, CancellationToken cancellationToken)
     {
+        if(!await _context.Urls.AnyAsync(i => i.CompactUrl == request.Id))
+        {
+            throw new NotFoundException($"Short Url Path: {request.Id} does not exist");
+        }
         return (await _context.Urls.SingleOrDefaultAsync(i => i.CompactUrl == request.Id))!.OriginalUrl;
     }
 }
