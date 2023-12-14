@@ -19,8 +19,9 @@ public class CreateShortUrlCommandValidator : AbstractValidator<CreateShortUrlCo
         _ = RuleFor(v => v.Url)
           .NotEmpty()
           .WithMessage("Url is required.");
-        //RuleFor<CreateShortUrlCommand>(i => i).Custom((i, j) => Uri.TryCreate(i.Url, UriKind.Absolute, out var result))
-        //    .Custom()
+        _ = RuleFor(v => v.Url)
+            .Must(url => Uri.TryCreate(url, UriKind.Absolute, out Uri? result))
+            .WithMessage("Url is not in a correct format");
     }
 }
 
