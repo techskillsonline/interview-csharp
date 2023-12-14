@@ -1,4 +1,4 @@
-using FastEndpoints.Swagger;
+﻿using FastEndpoints.Swagger;
 using UrlShortenerService.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ if (builder.Environment.IsDevelopment())
 }
 
 // Add services to the container.
-_ = builder.Services.AddApplicationServices();
+_ = builder.Services.AddApplicationServices(builder.Configuration);
 _ = builder.Services.AddInfrastructureServices(builder.Configuration);
 _ = builder.Services.AddApiServices(builder.Configuration);
 
@@ -38,3 +38,4 @@ if (app.Environment.IsDevelopment())
 _ = app.UseHttpsRedirection();
 
 app.Run();
+

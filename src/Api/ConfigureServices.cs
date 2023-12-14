@@ -1,4 +1,4 @@
-using HashidsNet;
+﻿using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortenerService.Api.Middlewares;
 

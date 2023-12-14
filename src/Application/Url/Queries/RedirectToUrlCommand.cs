@@ -1,9 +1,10 @@
-using FluentValidation;
+﻿using FluentValidation;
 using HashidsNet;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using UrlShortenerService.Application.Common.Interfaces;
 
-namespace UrlShortenerService.Application.Url.Commands;
+namespace UrlShortenerService.Application.Url.Queries;
 
 public record RedirectToUrlCommand : IRequest<string>
 {
@@ -33,7 +34,7 @@ public class RedirectToUrlCommandHandler : IRequestHandler<RedirectToUrlCommand,
 
     public async Task<string> Handle(RedirectToUrlCommand request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        throw new NotImplementedException();
+        return (await _context.Urls.SingleOrDefaultAsync(i => i.CompactUrl == request.Id))!.OriginalUrl;
     }
 }
+
